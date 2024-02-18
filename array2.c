@@ -3,7 +3,7 @@
 #include <string.h>
 #include"info.h"
 
-#define MAX_STUDENTS 100
+#define MAX_STUDENTS 10000
 
 struct Student {
     int rollNumber;
