@@ -9,8 +9,7 @@ struct Student {
     int rollNumber;
     char name[50];
     float sgpa[8];
-    float cgpa;
-    int semNumber;  
+    float cgpa; 
 };
 
 struct Student students[MAX_STUDENTS];
@@ -25,21 +24,10 @@ void insertStudent() {
         printf("Enter Name: ");
         scanf("%s", newStudent.name);
         
-        printf("Enter Number of Semesters Completed: ");
-        scanf("%d", &newStudent.semNumber);
-
-       
-        for (int i = 0; i < 8; i++) {
-            newStudent.sgpa[i] = 0;
-        }
-
-        printf("Enter SGPA for %d Semesters: ", newStudent.semNumber);
-        for (int i = 0; i < newStudent.semNumber; i++) {
-            scanf("%f", &newStudent.sgpa[i]);
-        }
+        
 
         newStudent.cgpa = 0.0;
-        for (int i = 0; i < newStudent.semNumber; i++) {
+        for (int i = 0; i < 8; i++) {
             newStudent.cgpa += newStudent.sgpa[i];
         }
         newStudent.cgpa /= newStudent.semNumber;
