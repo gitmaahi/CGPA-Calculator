@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include"info.h"
 
 #define MAX_STUDENTS 10000
-
+/// @brief 
 struct Student {
     int rollNumber;
     char name[50];
@@ -30,11 +29,12 @@ void insertStudent() {
         for (int i = 0; i < 8; i++) {
             newStudent.cgpa += newStudent.sgpa[i];
         }
-        newStudent.cgpa /= newStudent.semNumber;
+        newStudent.cgpa /= 8;
 
         students[studentCount++] = newStudent;
         printf("Student entry added successfully!\n");
-    } else {
+    } 
+    else {
         printf("Maximum number of students reached!\n");
     }
 }
@@ -83,7 +83,72 @@ void displayTop5() {
         printf("Roll Number: %d, Name: %s, CGPA: %.2f\n", students[i].rollNumber, students[i].name, students[i].cgpa);
     }
 }
+int searchByRollNumber(int rollNumber) {
+    for (int i = 0; i < studentCount; i++) {
+        if (students[i].rollNumber == rollNumber) {
+            return i; 
+        }
+    }
+    return -1; 
+}
 
+
+int searchByName(const char *name) {
+    for (int i = 0; i < studentCount; i++) {
+        if (strcmp(students[i].name, name) == 0) {
+            return i; 
+        }
+    }
+    return -1; 
+}
+void updateStudent(int rollNumber) {
+    int studentIndex = -1;
+
+    for (int i = 0; i < studentCount; i++) {
+        if (students[i].rollNumber == rollNumber) {
+            studentIndex = i;
+            break;
+        }
+    }
+
+    if (studentIndex != -1) {
+        printf("Choose what to update:\n");
+        printf("1. Name\n");
+        printf("2. SGPA\n");
+
+        int updateChoice;
+        scanf("%d", &updateChoice);
+
+        switch (updateChoice) {
+            case 1:
+                printf("Enter new name: ");
+                scanf("%s", students[studentIndex].name);
+                break;
+            case 2:
+                printf("Enter new SGPA values (8 semesters): ");
+                for (int i = 0; i < 8; i++) {
+                    scanf("%f", &students[studentIndex].sgpa[i]);
+                }
+                
+                students[studentIndex].cgpa = 0.0;
+                for (int i = 0; i < 8; i++) {
+                    students[studentIndex].cgpa += students[studentIndex].sgpa[i];
+                }
+                students[studentIndex].cgpa /= 8;
+                break;
+            default:
+                printf("Invalid choice for update.\n");
+                return;
+        }
+
+        printf("Student with Roll Number %d updated successfully!\n", rollNumber);
+    } else {
+        printf("Student not found!\n");
+    }
+}
+int printStudentCount(){
+    return studentCount;
+}
 int main() {
     int choice;
     int rollNumber;
